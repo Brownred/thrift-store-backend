@@ -56,10 +56,10 @@ app.post("/callback", async (req, res)=> {
 
         console.log(req.body)
         
-        const stkCallbackData = req.body.Body;
+        const {stkCallback} = req.body.Body;
 
         let status = null
-        if (stkCallbackData.ResultCode === 0) {
+        if (stkCallback.ResultCode === 0) {
             status = "SUCCESS"
         } else {
             status = "FAILED"
@@ -68,7 +68,7 @@ app.post("/callback", async (req, res)=> {
         // Database Logic to update the transaction status.
         const dbdata = await prisma.transaction.update({
             where: {
-                CheckoutRequestID: stkCallbackData.CheckoutRequestID
+                CheckoutRequestID: stkCallback.CheckoutRequestID
             }, 
             data: {
                 status: status
@@ -78,11 +78,12 @@ app.post("/callback", async (req, res)=> {
         console.log(dbdata)
 
 
-        res.json({status, stkCallbackData})
+        res.json({status, stkCallback})
 
 
 
     } catch (error) {
+        console.error(error)
         res.status(500).json({error: 'something went wrong'})
     }
 })
