@@ -51,7 +51,7 @@ app.post("/initiate", async (req, res) => {
 })
 
 // callback endpoint
-app.post('/callback', async (req, res)=> {
+app.post("/callback", async (req, res)=> {
     try {
 
         console.log(req.body)
