@@ -53,6 +53,8 @@ app.post("/initiate", async (req, res) => {
 // callback endpoint
 app.post('/callback', async (req, res)=> {
     try {
+
+        console.log(req.body)
         
         const stkCallbackData = req.body.Body;
 
@@ -64,7 +66,7 @@ app.post('/callback', async (req, res)=> {
         }
 
         // Database Logic to update the transaction status.
-        await prisma.transaction.update({
+        const dbdata = await prisma.transaction.update({
             where: {
                 CheckoutRequestID: stkCallbackData.CheckoutRequestID
             }, 
@@ -72,6 +74,8 @@ app.post('/callback', async (req, res)=> {
                 status: status
             }
         })
+
+        console.log(dbdata)
 
 
         res.json({status, stkCallbackData})
