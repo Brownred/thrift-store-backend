@@ -54,9 +54,10 @@ app.post("/initiate", async (req, res) => {
 app.post("/callback", async (req, res)=> {
     try {
 
-        console.log(req.body)
         
         const {stkCallback} = req.body.Body;
+
+        console.log(stkCallback)
 
         let status = null
         if (stkCallback.ResultCode === 0) {
